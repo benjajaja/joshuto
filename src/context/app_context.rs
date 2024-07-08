@@ -56,6 +56,9 @@ impl AppContext {
             .is_none()
         {
             Picker::from_termios().ok().and_then(|mut picker| {
+                picker.background_color = config
+                    .preview_options_ref()
+                    .preview_protocol_background_color;
                 match config.preview_options_ref().preview_protocol {
                     PreviewProtocol::Auto => {
                         picker.guess_protocol(); // Must run before Events::new() because it makes ioctl calls.

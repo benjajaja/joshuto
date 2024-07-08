@@ -27,6 +27,8 @@ pub struct PreviewOptionRaw {
     pub preview_shown_hook_script: Option<String>,
     #[serde(default)]
     pub preview_removed_hook_script: Option<String>,
+    #[serde(default)]
+    pub preview_protocol_background_color: Option<[u8; 3]>,
 }
 
 impl std::default::Default for PreviewOptionRaw {
@@ -37,6 +39,7 @@ impl std::default::Default for PreviewOptionRaw {
             preview_script: None,
             preview_shown_hook_script: None,
             preview_removed_hook_script: None,
+            preview_protocol_background_color: None,
         }
     }
 }

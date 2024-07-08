@@ -7,10 +7,12 @@ for which terminals are supported.
 To disable or override the detected protocol, the `preview_protocol` option can
 be used in the `joshuto.toml` file. Accepted values are `auto` (default), 
 `disabled`, or any of the [implemented protocols](https://docs.rs/ratatui-image/latest/ratatui_image/picker/enum.ProtocolType.html) 
-in lowercase.
+in lowercase. A background color can also be specified, to override the default 
+which is black.
 ```toml
 [preview]
 preview_protocol = "halfblocks"
+preview_protocol_background_color = [255, 255, 255]
 ...
 ```
 

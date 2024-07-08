@@ -13,6 +13,7 @@ use crate::{
 pub struct PreviewOption {
     pub max_preview_size: u64,
     pub preview_protocol: PreviewProtocol,
+    pub preview_protocol_background_color: Option<image::Rgb<u8>>,
     pub preview_script: Option<path::PathBuf>,
     pub preview_shown_hook_script: Option<path::PathBuf>,
     pub preview_removed_hook_script: Option<path::PathBuf>,
@@ -26,6 +27,7 @@ impl std::default::Default for PreviewOption {
             preview_script: None,
             preview_shown_hook_script: None,
             preview_removed_hook_script: None,
+            preview_protocol_background_color: None,
         }
     }
 }
@@ -45,12 +47,17 @@ impl From<PreviewOptionRaw> for PreviewOption {
             .preview_removed_hook_script
             .map(|s| unix::expand_shell_string(&s));
 
+        let preview_protocol_background_color = raw
+            .preview_protocol_background_color
+            .map(|rgb| image::Rgb::from(rgb));
+
         Self {
             max_preview_size: raw.max_preview_size,
             preview_protocol: raw.preview_protocol,
             preview_script,
             preview_shown_hook_script,
             preview_removed_hook_script,
+            preview_protocol_background_color,
         }
     }
 }
