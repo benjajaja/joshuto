@@ -1,6 +1,8 @@
 use lscolors::LsColors;
+use ratatui::style::Color;
 use std::collections::HashMap;
 
+use crate::config::raw::theme::style::AppStyleRaw;
 use crate::config::raw::theme::AppThemeRaw;
 use crate::config::{ConfigType, TomlConfigFile};
 use crate::error::AppResult;
@@ -22,6 +24,7 @@ pub struct AppTheme {
     pub socket: AppStyle,
     pub ext: HashMap<String, AppStyle>,
     pub lscolors: Option<LsColors>,
+    pub preview_background: Color,
 }
 
 impl AppTheme {
@@ -73,6 +76,7 @@ impl From<AppThemeRaw> for AppTheme {
         } else {
             None
         };
+        let preview_background = AppStyleRaw::str_to_color(&raw.preview_background);
 
         Self {
             selection,
@@ -86,6 +90,7 @@ impl From<AppThemeRaw> for AppTheme {
             ext,
             tabs: TabTheme::from(tabs),
             lscolors,
+            preview_background,
         }
     }
 }

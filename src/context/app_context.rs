@@ -11,8 +11,9 @@ use crate::context::{
 use crate::event::{AppEvent, Events};
 use crate::preview::preview_file::PreviewFileState;
 use crate::ui::AppBackend;
-use crate::Args;
+use crate::{Args, THEME_T};
 use notify::{RecursiveMode, Watcher};
+use ratatui::style::Color;
 use ratatui_image::picker::Picker;
 use std::path;
 
@@ -56,9 +57,10 @@ impl AppContext {
             .is_none()
         {
             Picker::from_termios().ok().and_then(|mut picker| {
-                picker.background_color = config
-                    .preview_options_ref()
-                    .preview_protocol_background_color;
+                picker.background_color = match THEME_T.preview_background {
+                    Color::Rgb(r,g,b) => Some(image::Rgb([r,g,b])),
+                    _ => None,
+                };
                 match config.preview_options_ref().preview_protocol {
                     PreviewProtocol::Auto => {
                         picker.guess_protocol(); // Must run before Events::new() because it makes ioctl calls.
